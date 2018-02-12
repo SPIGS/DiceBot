@@ -18,4 +18,4 @@ In the future, the bot will (hopefully) be able to:
 5. Profit
 
 
-It should be noted that dicebot.py offers additional commands, however they offer no utility and are currently for testing purposes.
+It should be noted that dicebot.py offers additional commands, however they offer no utility and are currently for testing purposes. dicebot(old).py, while older thatn dicebot.py is the most complete version and should be used in place of dicebot.py.
