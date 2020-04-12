@@ -3,6 +3,7 @@ import random
 import re
 
 def getRoll (dice, author):
+    
     #log info
     print (str(author) + " is attempting to roll " + str(dice) + "!")
 
@@ -11,9 +12,11 @@ def getRoll (dice, author):
     embedresult = discord.Embed()
     embedresult.type = "rich"
     usercolour = discord.Colour.dark_purple()
-    for role in author.roles:
-        if role.is_everyone == False:
-            usercolour = role.colour
+    try:
+        usercolour = author.top_role.colour
+    except:
+        usercolour = discord.Colour.dark_purple()
+        
     embedresult.colour = usercolour
     embedresult.clear_fields()
 
@@ -123,10 +126,7 @@ def getStats (author):
     result_string = "[ "
     embedresult = discord.Embed()
     embedresult.type = "rich"
-    usercolour = discord.Colour.dark_purple()
-    for role in author.roles:
-        if role.is_everyone == False:
-            usercolour = role.colour
+    usercolour = author.top_role.colour
     embedresult.colour = usercolour
     embedresult.clear_fields()
 

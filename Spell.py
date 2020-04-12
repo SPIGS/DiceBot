@@ -10,13 +10,14 @@ def getSpells (author, message, spells):
 
     embedresult = discord.Embed()
     embedresult.type = "rich"
-    usercolor = discord.Color.dark_purple()
-    for role in author.roles:
-        if role.is_everyone == False:
-            usercolor = role.colour
-
+    usercolour = discord.Colour.dark_purple()
+    try:
+        usercolour = author.top_role.colour
+    except:
+        usercolour = discord.Colour.dark_purple()
+        
+    embedresult.colour = usercolour
     results = ""
-    embedresult.colour = usercolor
 
     for spell in spells:
         matches = 0

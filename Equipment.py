@@ -8,14 +8,17 @@ def getEquipment (author, message, equipment):
     print(str(author) + " is searching equipment with terms: " + str(searchterms))
     results = ""
 
-    usercolor = discord.Color.dark_purple()
-    for role in author.roles:
-        if role.is_everyone == False:
-            usercolor = role.colour
+    
 
     embedresult = discord.Embed()
     embedresult.type = "rich"
-    embedresult.colour = usercolor
+    usercolour = discord.Colour.dark_purple()
+    try:
+        usercolour = author.top_role.colour
+    except:
+        usercolour = discord.Colour.dark_purple()
+        
+    embedresult.colour = usercolour
     embedresult.clear_fields()
     for item in equipment:
         matches= 0
