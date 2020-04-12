@@ -1,0 +1,4 @@
+# VSCode
+.vscode/
+#pycache
+__pycache__/
