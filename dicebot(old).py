@@ -140,4 +140,4 @@ async def gameset (ctx, *, gamemode):
     await ctx.message.channel.send(embed=embedresult)
 
 
-bot.run("MzQyMDYzOTA2NzE5NjYyMDgw.Xn5NUw.Iqb-RyDkt0AsHvNNBs_FqQv4rM4")
+bot.run("ENTER ID HERE")
