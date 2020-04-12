@@ -1,4 +1,8 @@
 # VSCode
 .vscode/
+
 #pycache
 __pycache__/
+
+#user info
+docs/userinfo.txt
