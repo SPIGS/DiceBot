@@ -22,11 +22,11 @@ bot_prefix='.'
 bot = commands.Bot(command_prefix=bot_prefix)
 
 spells = {}
-with open("json/spells.json", "r", encoding="utf8") as fp:
+with open("docs/spells.json", "r", encoding="utf8") as fp:
     spells = json.load(fp)
 
 equipments ={}
-with open("json/equipment.json", "r", encoding="utf8") as fp:
+with open("docs/equipment.json", "r", encoding="utf8") as fp:
     equipments = json.load(fp)
 
 @bot.event
