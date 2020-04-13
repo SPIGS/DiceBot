@@ -17,12 +17,12 @@ class Reference(commands.Cog):
         with open("docs/equipment.json", "r", encoding="utf8") as fp:
             self.equipments_info = json.load(fp)
 
-    @commands.command(aliases=["equip"], pass_context=True, invoke_without_command=True, help='Retrieves info about a piece of equipment given its name or searches for equipment when given a series of search terms.', brief='- provides rules reference for equipment stats.', description='Equipment')
+    @commands.command(aliases=["equip", "eq"], pass_context=True, invoke_without_command=True, help='Retrieves info about a piece of equipment given its name or searches for equipment when given a series of search terms.', brief='- provides rules reference for equipment stats.', description='Equipment')
     async def equipment (self, ctx, *, equipment_info):
         item = self.getEquipment(ctx.message.author, equipment_info)
         await ctx.message.channel.send(embed=item)
 
-    @commands.command(aliases=["spell"], pass_context=True, invoke_without_command=True, help='Retrieves info about a spell given its name or searches for spells when given a series of search terms.', brief='- provides rules reference for spell information.', description='Spells')
+    @commands.command(aliases=["spell", "sp"], pass_context=True, invoke_without_command=True, help='Retrieves info about a spell given its name or searches for spells when given a series of search terms.', brief='- provides rules reference for spell information.', description='Spells')
     async def spells (self, ctx, *, spell_info):
         spellresult = self.getSpells(ctx.message.author, spell_info)
         await ctx.message.channel.send(embed=spellresult)

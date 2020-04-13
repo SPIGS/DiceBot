@@ -9,7 +9,7 @@ class Dice(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group(name='roll', pass_context=True, invoke_without_command=True, help='Rolls dice. Examples: \n\".roll 1d20\" Rolls one twenty-sided die. \n\".roll 2d6+3\" Rolls two six-sided die and adds a modifier of three. \n\".roll stats\" Automatically rolls 6 attribute stats using 5e rules. \nMake sure there are no spaces.', brief='- Rolls dice.', description='Roll')
+    @commands.group(name='roll', aliases=['r'], pass_context=True, invoke_without_command=True, help='Rolls dice. Examples: \n\".roll 1d20\" Rolls one twenty-sided die. \n\".roll 2d6+3\" Rolls two six-sided die and adds a modifier of three. \n\".roll stats\" Automatically rolls 6 attribute stats using 5e rules. \nMake sure there are no spaces.', brief='- Rolls dice.', description='Roll')
     async def roll(self, ctx, dice : str):
         author = ctx.message.author
         result, natural = self.getRoll(dice=dice, author=author)

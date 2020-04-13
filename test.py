@@ -8,7 +8,7 @@ from gamemode import GameMode
 token = ""
 command_prefix = ""
 
-extensions = ["cogs.roll", "cogs.reference"]
+extensions = ["cogs.roll", "cogs.reference", "cogs.utility"]
 
 def load_user_info():
     global token
@@ -46,7 +46,7 @@ async def on_ready():
     print("Let's Roll!")
     print(bot.user.name)
     print(bot.user.id)
-    await bot.change_presence(activity=discord.Game(name='D&D 5th Edition | !help'))
+    await bot.change_presence(activity=discord.Game(name='D&D 5th Edition | ' + bot.command_prefix + 'help'))
     
 bot.run(token, bot=True, reconnect=True)
 
