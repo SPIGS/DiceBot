@@ -3,9 +3,12 @@ from discord.ext import commands
 import asyncio
 import os.path
 from os import path
+from gamemode import GameMode
 
 token = ""
 command_prefix = ""
+
+extensions = ["cogs.roll", "cogs.reference"]
 
 def load_user_info():
     global token
@@ -33,7 +36,9 @@ if __name__ == '__main__':
         load_user_info()
     
     bot.command_prefix = command_prefix
-    #load extensions here
+    for extension in extensions:
+        bot.load_extension(extension)
+    bot.current_gamemode = GameMode.WIZARDS_FIFTH_ED
 
 
 @bot.event
