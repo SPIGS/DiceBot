@@ -36,6 +36,7 @@ if __name__ == '__main__':
         load_user_info()
     
     bot.command_prefix = command_prefix
+    bot.remove_command("help")
     for extension in extensions:
         bot.load_extension(extension)
     bot.current_gamemode = GameMode.WIZARDS_FIFTH_ED
