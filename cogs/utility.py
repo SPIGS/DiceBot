@@ -32,7 +32,7 @@ class Utility(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["gamemodeset", "setgamemode", "sgm", "gms"], pass_context=True, help='Switches the current game mode to a new one. The currently supported games are:\n - Dungeons and Dragons Fifth Edition\n - Star Wars Fifth Edition', brief='- switches the current game mode.', description='Set Game Mode')
+    @commands.command(name="gamemode", aliases=["gamemodeset", "setgamemode", "sgm", "gms"], pass_context=True, help='Switches the current game mode to a new one. The currently supported games are:\n - Dungeons and Dragons Fifth Edition\n - Star Wars Fifth Edition', brief='- switches the current game mode.', description='Set Game Mode')
     async def gamemode (self, ctx, gamemode):
         
         embedresult = discord.Embed()
@@ -69,12 +69,13 @@ class Utility(commands.Cog):
         
         await ctx.message.channel.send(embed=embedresult)
 
-    @commands.group(pass_context=True, invoke_without_command=True)
+    @commands.group(pass_context=True, invoke_without_command=True, help='Shows the help prompt.', brief='- Shows this prompt.', description='Help')
     async def help(self, ctx):
         if is_public_channel(ctx.message.channel):
             await self.send_help_notification(ctx.message.channel)
-
+        
         await ctx.message.author.send("Default help")
+        await self.send_help(ctx.message.author)
 
     @help.group(aliases=["equip", "eq"], pass_context=True, invoke_without_command=True)
     async def equipment(self, ctx):
@@ -99,7 +100,14 @@ class Utility(commands.Cog):
         roll_command = self.bot.get_command("roll")
 
         await self.send_command_help(ctx.message.author, roll_command, ["stats"])
-        
+
+    @help.group(aliases=["gamemode","gamemodeset", "setgamemode", "sgm", "gms"], pass_context=True, invoke_without_command=True)
+    async def gamemode_help(self, ctx):
+        if is_public_channel(ctx.message.channel):
+            await self.send_help_notification(ctx.message.channel)
+        gamemode_command = self.bot.get_command("gamemode")
+
+        await self.send_command_help(ctx.message.author, gamemode_command, None)
 
     @roll.group(pass_context=True, invoke_without_command=True)
     async def stats (self, ctx):
@@ -122,6 +130,36 @@ class Utility(commands.Cog):
         embedresult.clear_fields()
         embedresult.title = ":white_check_mark: " + "  Help sent! Check your DMs."
         await channel.send(embed=embedresult)
+
+    async def send_help (self, author):
+        embedresult = discord.Embed()
+        embedresult.type = "rich"
+        usercolour = discord.Colour.dark_purple()
+        try:
+            usercolour = author.top_role.colour
+        except:
+            usercolour = discord.Colour.dark_purple()
+
+        embedresult.colour = usercolour
+        embedresult.clear_fields()
+        embedresult.title = "Help"
+
+        roll_command = self.bot.get_command("roll")
+        spells_command = self.bot.get_command("spells")
+        equipment_command = self.bot.get_command("equipment")
+        help_command = self.bot.get_command("help")
+        gamemodeset_command = self.bot.get_command("gamemode")
+
+        embedresult.add_field(name="Dice:", value="`" + roll_command.name + " " + roll_command.signature + "`" + " " + roll_command.brief, inline=False)
+        embedresult.add_field(name="Reference:", value="`" + equipment_command.name +
+                              " " + equipment_command.signature + "`" + " " + equipment_command.brief + "\n" + 
+                              "`" + spells_command.name +
+                              " " + spells_command.signature + "`" + " " + spells_command.brief, inline=False)
+        embedresult.add_field(name="Utility:", value="`" + help_command.name +
+                              " " + help_command.signature + "`" + " " + help_command.brief + "\n" +
+                              "`" + gamemodeset_command.name +
+                              " " + gamemodeset_command.signature + "`" + " " + gamemodeset_command.brief, inline=False)
+        await author.send(embed=embedresult)
 
     async def send_command_help (self, author, command, subcommands: [str]):
         embedresult = discord.Embed()
