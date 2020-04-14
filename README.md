@@ -1,5 +1,7 @@
 # Info
-DiceBot is a bot that provides DM's with a means of playing Dungeons and Dragons on Discord. 
+> DiceBot is a bot that provides DM's with a means of playing Dungeons and Dragons on Discord. 
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Currently that bot can:
  - Roll dice of any size from d2 to d100 (even physically impossible dice like a d3 if you really need it)
