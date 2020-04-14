@@ -20,7 +20,7 @@ def get_good_reaction (current_gamemode):
     return path
 
 def get_bad_reaction(current_gamemode):
-    path = "resources/reactions/5e/bad/" + random.choice(sw_bad_reactions)
+    path = "resources/reactions/5e/bad/" + random.choice(fifth_ed_bad_reactions)
     if current_gamemode == GameMode.STAR_WARS_FIFTH_ED:
         path = "resources/reactions/sw5e/bad/" + random.choice(sw_bad_reactions)
     return path

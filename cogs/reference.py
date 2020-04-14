@@ -17,12 +17,12 @@ class Reference(commands.Cog):
         with open("docs/equipment.json", "r", encoding="utf8") as fp:
             self.equipments_info = json.load(fp)
 
-    @commands.command(aliases=["equip", "eq"], pass_context=True, invoke_without_command=True, help='Retrieves info about a piece of equipment given its name or searches for equipment when given a series of search terms.', brief='- provides rules reference for equipment stats.', description='Equipment')
+    @commands.command(name='equipment', aliases=["equip", "eq"], pass_context=True, invoke_without_command=True, help='Retrieves info about a piece of equipment given its name or searches for equipment when given a series of search terms.', brief='- provides rules reference for equipment stats.', description='Equipment')
     async def equipment (self, ctx, *, equipment_info):
         item = self.getEquipment(ctx.message.author, equipment_info)
         await ctx.message.channel.send(embed=item)
 
-    @commands.command(aliases=["spell", "sp"], pass_context=True, invoke_without_command=True, help='Retrieves info about a spell given its name or searches for spells when given a series of search terms.', brief='- provides rules reference for spell information.', description='Spells')
+    @commands.command(name='spells', aliases=["spell", "sp"], pass_context=True, invoke_without_command=True, help='Retrieves info about a spell given its name or searches for spells when given a series of search terms.', brief='- provides rules reference for spell information.', description='Spells')
     async def spells (self, ctx, *, spell_info):
         spellresult = self.getSpells(ctx.message.author, spell_info)
         await ctx.message.channel.send(embed=spellresult)
@@ -31,7 +31,7 @@ class Reference(commands.Cog):
         message = message.lower()
         searchterms = re.split('(?<!level)\s', message)
 
-        print (str(author) + " is searching for spelss with terms " + str(searchterms))
+        print (str(author) + " is searching for spells with terms " + str(searchterms))
 
         embedresult = discord.Embed()
         embedresult.type = "rich"
@@ -47,7 +47,6 @@ class Reference(commands.Cog):
         for spell in self.spells_info:
             matches = 0
             if " ".join(searchterms) == spell['name'].lower():
-                print("hello")
                 embedresult.clear_fields()
                 embedresult.title = spell['name']
                 embedresult.add_field(name=spell['level'], value="\u200b", inline=False)

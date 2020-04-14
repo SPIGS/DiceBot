@@ -19,12 +19,11 @@ class Dice(commands.Cog):
         elif natural == 20:
             await ctx.message.channel.send(file=discord.File(get_good_reaction(self.bot.current_gamemode)))
 
-    @roll.group(pass_context=True, invoke_without_command=True, help='Rolls 6 attribute stats. Equivalent to rolling 4d6 and subtracting the lowest result, six times.', brief=' - Rolls 6 attribute stats.', description='Stats')
+    @roll.group(name='stats', pass_context=True, invoke_without_command=True, help='Rolls 6 attribute stats. Equivalent to rolling 4d6 and subtracting the lowest result, six times.', brief=' - Rolls 6 attribute stats.', description='Stats')
     async def stats(self, ctx):
         author = ctx.message.author
         stats = self.getStats(author)
         await ctx.message.channel.send(embed=stats)
-        print(self.bot.test)
 
     def getRoll (self, dice, author):
         #log info
@@ -47,7 +46,7 @@ class Dice(commands.Cog):
         if (r'+' in dice) and ('-' in dice):
             result_string = "Error: Too many operators!"
             print(result_string)
-            embedresult.add_field(name=result_string, value="\u200b", inline=False)
+            embedresult.title = result_string
             return embedresult, 0
 
         #parse the input
@@ -66,7 +65,7 @@ class Dice(commands.Cog):
         except ValueError:
             result_string = "Error: Value is not a valid roll!"
             print(result_string)
-            embedresult.add_field(name=result_string, value="\u200b", inline=False)
+            embedresult.title = result_string
             return embedresult, 0
 
         #assign value to modifier
@@ -78,26 +77,26 @@ class Dice(commands.Cog):
         except ValueError:
             result_string = "Error: No valid modifier!"
             print(result_string)
-            embedresult.add_field(name=result_string, value="\u200b", inline=False)
+            embedresult.title = result_string
             return embedresult, 0
 
         #test if roll complies with restrictions
         if int(parsed_roll[0]) == 0:
             result_string = "Error : Can't roll 0 dice!"
             print(result_string)
-            embedresult.add_field(name=result_string, value="\u200b", inline=False)
+            embedresult.title = result_string
             return embedresult, 0
 
         if int(parsed_roll[0]) >= 20:
             result_string = "Error: Too many dice."
             print (result_string)
-            embedresult.add_field(name=result_string, value="\u200b", inline=False)
+            embedresult.title = result_string
             return embedresult, 0
 
         if int(parsed_roll[1]) > 100:
             result_string = "Error: Number of faces is too high."
             print(result_string)
-            embedresult.add_field(name=result_string, value="\u200b", inline=False)
+            embedresult.title = result_string
             return embedresult, 0
 
         #roll each die
@@ -107,7 +106,7 @@ class Dice(commands.Cog):
             except ValueError:
                 result_string = "Error: Don't use spaces for the dice argument!"
                 print (result_string)
-                embedresult.add_field(name=result_string, value="\u200b", inline=False)
+                embedresult.title = result_string
                 return embedresult, 0
 
 
@@ -134,8 +133,7 @@ class Dice(commands.Cog):
                 natural = 20
             else:
                 natural = 0
-
-        embedresult.add_field(name=result_string + " = " + str(total), value="\u200b", inline=False)
+        embedresult.title = result_string + " = " + str(total)
 
         #return  the result
         print (result_string + " = " + str(total))
@@ -149,7 +147,11 @@ class Dice(commands.Cog):
         result_string = "[ "
         embedresult = discord.Embed()
         embedresult.type = "rich"
-        usercolour = author.top_role.colour
+        usercolour = discord.Colour.dark_purple()
+        try:
+            usercolour = author.top_role.colour
+        except:
+            usercolour = discord.Colour.dark_purple()
         embedresult.colour = usercolour
         embedresult.clear_fields()
 
@@ -164,7 +166,7 @@ class Dice(commands.Cog):
                 result_string = result_string + str(stat)
         result_string = result_string + " ]"
 
-        embedresult.add_field(name=result_string, value="\u200b", inline=False)
+        embedresult.title = result_string
         return embedresult
 
 
