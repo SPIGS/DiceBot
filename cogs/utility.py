@@ -74,7 +74,6 @@ class Utility(commands.Cog):
         if is_public_channel(ctx.message.channel):
             await self.send_help_notification(ctx.message.channel)
         
-        await ctx.message.author.send("Default help")
         await self.send_help(ctx.message.author)
 
     @help.group(aliases=["equip", "eq"], pass_context=True, invoke_without_command=True)
