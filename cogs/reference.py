@@ -10,15 +10,15 @@ class Reference(commands.Cog):
         self.bot = bot
 
         self.spells_info = {}
-        with open("docs/spells.json", "r", encoding="utf8") as fp:
+        with open("docs/5e/spells.json", "r", encoding="utf8") as fp:
             self.spells_info = json.load(fp)
 
         self.equipments_info = {}
-        with open("docs/equipment.json", "r", encoding="utf8") as fp:
+        with open("docs/5e/equipment.json", "r", encoding="utf8") as fp:
             self.equipments_info = json.load(fp)
 
         self.powers_info = {}
-        with open("docs/powers.json", "r", encoding="utf8") as fp:
+        with open("docs/sw5e/powers.json", "r", encoding="utf8") as fp:
             self.powers_info = json.load(fp)
 
     @commands.command(name='equipment', aliases=["equip", "eq"], pass_context=True, invoke_without_command=True, help='Retrieves info about a piece of equipment given its name or searches for equipment when given a series of search terms.', brief='- provides rules reference for equipment stats.', description='Equipment')
