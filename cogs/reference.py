@@ -13,17 +13,24 @@ class Reference(commands.Cog):
         with open("docs/5e/spells.json", "r", encoding="utf8") as fp:
             self.spells_info = json.load(fp)
 
-        self.equipments_info = {}
+        self.fifth_ed_equipment_info = {}
         with open("docs/5e/equipment.json", "r", encoding="utf8") as fp:
-            self.equipments_info = json.load(fp)
+            self.fifth_ed_equipment_info = json.load(fp)
 
         self.powers_info = {}
         with open("docs/sw5e/powers.json", "r", encoding="utf8") as fp:
             self.powers_info = json.load(fp)
 
+        self.sw_equipment_info = {}
+        with open("docs/sw5e/equipment.json", "r", encoding="utf8") as fp:
+            self.sw_equipment_info = json.load(fp)
+
     @commands.command(name='equipment', aliases=["equip", "eq"], pass_context=True, invoke_without_command=True, help='Retrieves info about a piece of equipment given its name or searches for equipment when given a series of search terms.', brief='- provides rules reference for equipment stats.', description='Equipment')
     async def equipment (self, ctx, *, equipment_info):
-        item = self.getEquipment(ctx.message.author, equipment_info)
+        if self.bot.current_gamemode == GameMode.WIZARDS_FIFTH_ED:
+            item = self.getEquipment(ctx.message.author, equipment_info, self.fifth_ed_equipment_info)
+        elif self.bot.current_gamemode == GameMode.STAR_WARS_FIFTH_ED:
+            item = self.getEquipment(ctx.message.author, equipment_info, self.sw_equipment_info)
         await ctx.message.channel.send(embed=item)
 
     @commands.command(name='spells', aliases=["spell", "sp"], pass_context=True, invoke_without_command=True, help='Retrieves info about a spell given its name or searches for spells when given a series of search terms.', brief='- provides rules reference for spell information.', description='Spells')
@@ -215,7 +222,7 @@ class Reference(commands.Cog):
 
         return embedresult
 
-    def getEquipment (self, author, message):
+    def getEquipment (self, author, message, fifth_ed_equipment_info):
         message = message.lower()
         searchterms = message.split(" ")
         print(str(author) + " is searching equipment with terms: " + str(searchterms))
@@ -231,7 +238,7 @@ class Reference(commands.Cog):
             
         embedresult.colour = usercolour
         embedresult.clear_fields()
-        for item in self.equipments_info:
+        for item in fifth_ed_equipment_info:
             matches= 0
             if " ".join(searchterms) == item['name'].lower():
                 embedresult.clear_fields()
