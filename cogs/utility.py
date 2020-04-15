@@ -50,6 +50,14 @@ class Utility(commands.Cog):
         if new_gamemode in fifth_edition_aliases:
             self.bot.current_gamemode = GameMode.WIZARDS_FIFTH_ED
             await self.bot.change_presence(activity=discord.Game(name='D&D 5th Edition | ' + self.bot.command_prefix + 'help'))
+
+            #disable commands
+            self.bot.get_command("powers").enabled = False
+            self.bot.get_command("help powers").enabled = False
+            #enable commands
+            self.bot.get_command("spells").enabled = True
+            self.bot.get_command("help spells").enabled = True
+
             choice = random.choice(dnd_sayings)
             quote = choice[0]
             originator = choice[1]
@@ -58,6 +66,14 @@ class Utility(commands.Cog):
         elif new_gamemode in sw_aliases:
             self.bot.current_gamemode = GameMode.STAR_WARS_FIFTH_ED
             await self.bot.change_presence(activity=discord.Game(name='Star Wars 5th Edition | ' + self.bot.command_prefix + 'help'))
+            
+            #disable commands
+            self.bot.get_command("spells").enabled = False
+            self.bot.get_command("help spells").enabled = False
+            #enable commands
+            self.bot.get_command("powers").enabled = True
+            self.bot.get_command("help powers").enabled = True
+
             embedresult.title = "Game changed to Star Wars 5th Edition"
             choice = random.choice(sw_sayings)
             quote = choice[0]
@@ -91,6 +107,14 @@ class Utility(commands.Cog):
         spells_command = self.bot.get_command("spells")
 
         await self.send_command_help(ctx.message.author, spells_command, None)
+
+    @help.group(aliases=["power", "pow", "p"], enabled= False, pass_context=True, invoke_without_command=True)
+    async def powers(self, ctx):
+        if is_public_channel(ctx.message.channel):
+            await self.send_help_notification(ctx.message.channel)
+        powers_command = self.bot.get_command("powers")
+
+        await self.send_command_help(ctx.message.author, powers_command, None)
     
     @help.group(aliases=["r"], pass_context=True, invoke_without_command=True)
     async def roll(self, ctx):
@@ -145,6 +169,8 @@ class Utility(commands.Cog):
 
         roll_command = self.bot.get_command("roll")
         spells_command = self.bot.get_command("spells")
+        if self.bot.current_gamemode == GameMode.STAR_WARS_FIFTH_ED:
+            spells_command = self.bot.get_command("powers")
         equipment_command = self.bot.get_command("equipment")
         help_command = self.bot.get_command("help")
         gamemodeset_command = self.bot.get_command("gamemode")
