@@ -4,7 +4,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Currently that bot can:
- - Roll dice of any size from d2 to d100 (even physically impossible dice like a d3 if you really need it)
+ - Roll dice with any number of sides from d2 to d100 (even physically impossible dice like a d3 if you really need it)
+ - Perform addition, subtraction, and multiplaction with dice and modifiers
  - Provides a full list of all Dungeons & Dragons spells and equipment and their descriptions / stats
 
 In the future, the bot will (hopefully) be able to:
