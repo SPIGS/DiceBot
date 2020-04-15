@@ -33,7 +33,7 @@ class Utility(commands.Cog):
         self.bot = bot
 
     @commands.command(name="gamemode", aliases=["gamemodeset", "setgamemode", "sgm", "gms"], pass_context=True, help='Switches the current game mode to a new one. The currently supported games are:\n - Dungeons and Dragons Fifth Edition\n - Star Wars Fifth Edition', brief='- switches the current game mode.', description='Set Game Mode')
-    async def gamemode (self, ctx, gamemode):
+    async def gamemode (self, ctx, *, gamemode):
         
         embedresult = discord.Embed()
         embedresult.type = "rich"
